@@ -1,11 +1,13 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-where cmake >nul 2>nul
-if errorlevel 1 if exist "C:\msys64\ucrt64\bin\cmake.exe" set "PATH=C:\msys64\ucrt64\bin;%PATH%"
-cmake -S . -B build
+if not exist build mkdir build
+where mingw32-make >nul 2>nul
+if errorlevel 1 (
+    make
+) else (
+    mingw32-make
+)
 if errorlevel 1 exit /b 1
-cmake --build build --config Debug
-if errorlevel 1 exit /b 1
-ctest --test-dir build -C Debug --output-on-failure
+build\main.exe
 exit /b %errorlevel%

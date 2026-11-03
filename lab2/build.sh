@@ -2,5 +2,5 @@
 set -e
 cd "$(dirname "$0")"
 mkdir -p build
-make
+make -B
 ./build/main
